@@ -1,0 +1,45 @@
+version: "3.7"
+services:  
+    # postgres used by airflow
+    postgres:
+        image: postgres:9.6
+        volumes: 
+            # Create Test database on Postgresql
+            - ./docker-airflow/pg-init-scripts:/docker-entrypoint-initdb.d
+        environment:
+            - POSTGRES_USER=airflow
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+        ports:
+            - "5432:5432"
+
+    # airflow LocalExecutor
+    airflow-webserver:
+        image: docker-airflow-pyspark:latest
+        restart: always
+        depends_on:
+            - postgres
+        environment:
+            - LOAD_EX=n
+            - EXECUTOR=Local
+            - CONN_POSTGRES_TEST=postgres://test:postgres@postgres:5432/test
+        volumes:
+            - ../dags:/usr/local/airflow/dags #DAG folder
+            - ../spark-scripts:/usr/local/airflow/spark-scripts #Spark Scripts
+        ports:
+            - "8080:8080"
+        command: webserver
+        healthcheck:
+            test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+            interval: 30s
+            timeout: 30s
+            retries: 3
+
+    #Jupyter notebook
+    jupyter-spark:
+        image: jupyter/pyspark-notebook
+        ports:
+          - "8888:8888"
+          - "4040-4080:4040-4080"
+        volumes:
+          - ../notebooks:/home/jovyan/work/notebooks/
