@@ -1,4 +1,4 @@
-# Airflow Spark
+# Airflow PySpark
 
 This project contains the following containers:
 
