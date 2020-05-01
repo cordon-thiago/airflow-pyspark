@@ -2,7 +2,7 @@
 
 This project contains the following containers:
 
-* postgres: Postgres database for Airflow
+* postgres: Postgres database for Airflow metadata and a Test database to test whatever you want.
     * Image: postgres:9.6
     * Database Port: 5432
     * References: https://hub.docker.com/_/postgres
@@ -48,6 +48,20 @@ If you want to run in background:
 ### Check if you can access
 
 Airflow: http://localhost:8080
+
+PostgreSql - Database Test:
+
+* Server: localhost:5432
+* Database: test
+* User: test
+* Password: postgres
+
+Postgres - Database airflow:
+
+* Server: localhost:5432
+* Database: airflow
+* User: airflow
+* Password: airflow
 
 Jupyter Notebook: http://127.0.0.1:8888
   * For Jupyter notebook, you must copy the URL with the token generated when the container is started and paste in your browser. The URL with the token can be taken from container logs using:
