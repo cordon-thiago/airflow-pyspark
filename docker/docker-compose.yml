@@ -43,3 +43,5 @@ services:
           - "4040-4080:4040-4080"
         volumes:
           - ../notebooks:/home/jovyan/work/notebooks/
+          - ../spark-scripts:/home/jovyan/work/spark-scripts/
+          - ../data:/home/jovyan/airflow/
