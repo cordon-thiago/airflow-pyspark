@@ -71,9 +71,11 @@ Jupyter Notebook: http://127.0.0.1:8888
 ## How to run a DAG test
 
 1. Access airflow web UI http://localhost:8080 and go to Connections
+
    ![](./doc/airflow_connections_menu.png "Airflow Connections")
 
 2. Edit the spark_default connection inserting localhost in Host field
+
    ![](./doc/airflow_spark_connection.png "Airflow Spark Connection")
 
 3. Run the spark-test DAG
@@ -90,6 +92,12 @@ After successfully built, run docker-compose to start container:
     sudo docker-compose up
 
 More info at: https://github.com/puckel/docker-airflow#build
+
+## How to run the spark app using spark-submit
+
+Inside the project directory (airflow-pyspark):
+
+    docker exec -it docker_jupyter-spark_1 spark-submit --master local /home/jovyan/work/spark-scripts/hello-world.py
 
 ## Useful docker commands
 
